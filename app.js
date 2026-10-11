@@ -311,6 +311,7 @@
       document.documentElement.style.setProperty("--h", l ? HUES[l.id] : 258);
       document.title = (l ? l.id + " " + l.name + " · " : "") + "AI Industry Stack";
       wire();
+      revealRail();
       if (key !== lastKey && !(opts && opts.keepScroll)) window.scrollTo(0, 0);
       lastKey = key;
       if (r.hl) highlight(r.hl);
@@ -504,6 +505,32 @@
     ext.init({ T: T, esc: esc, layerById: layerById, findNode: findNode, parse: parse, openPanel: openPanel, toast: toast });
     $("#suggestBtn").addEventListener("click", function () { ext.open(); });
   } else $("#suggestBtn").hidden = true;
+
+  // On phones, hand LinkedIn links to the LinkedIn app when it is installed.
+  // Android: an intent URL opens the app, or falls back to the web page if it is missing.
+  // iOS: LinkedIn's universal links only open the app reliably when followed in the same tab.
+  var UA = navigator.userAgent || "";
+  var isAndroid = /Android/i.test(UA);
+  var isIOS = /iPhone|iPad|iPod/i.test(UA) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  document.addEventListener("click", function (e) {
+    if (!isAndroid && !isIOS) return;
+    var a = e.target.closest && e.target.closest('a[href^="https://www.linkedin.com/"]');
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var href = a.href;
+    if (isAndroid && /linkedin\.com\/company\//.test(href)) {
+      e.preventDefault();
+      location.href = "intent://" + href.replace(/^https:\/\//, "") + "#Intent;scheme=https;package=com.linkedin.android;S.browser_fallback_url=" + encodeURIComponent(href) + ";end";
+    } else if (isIOS) {
+      e.preventDefault();
+      location.href = href;
+    }
+  });
+
+  // Keep the active layer visible in the sidebar when it scrolls sideways (phones, tablets).
+  function revealRail() {
+    var on = $(".rail-item.on"), rail = $(".rail");
+    if (on && rail && rail.scrollWidth > rail.clientWidth) rail.scrollLeft = on.offsetLeft - rail.clientWidth / 2 + on.offsetWidth / 2;
+  }
 
   window.addEventListener("hashchange", function () { render(); });
   buildIndex();
