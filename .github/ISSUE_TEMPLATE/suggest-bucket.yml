@@ -1,0 +1,30 @@
+name: Suggest a bucket
+description: Propose a new bucket inside one of the layers.
+title: "New bucket in <layer>: <name>"
+labels: ["suggestion", "bucket"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Name of the new bucket
+    validations:
+      required: true
+  - type: input
+    id: layer
+    attributes:
+      label: Layer
+      description: The layer id, L0 to L10.
+      placeholder: e.g. L8
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What goes in it, and how it differs from what is already on the map
+    validations:
+      required: true
+  - type: input
+    id: by
+    attributes:
+      label: Credit me as
+      description: Optional. Shown on the site as "suggested by".

@@ -1,0 +1,43 @@
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  issues: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Make sure the suggestion labels exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create suggestion --color 8b5cf6 --description "Suggested by a visitor" --force || true
+          gh label create approved   --color 22c55e --description "Add this to the site" --force || true
+          gh label create company    --color 0ea5e9 --force || true
+          gh label create bucket     --color f59e0b --force || true
+          gh label create layer      --color ef4444 --force || true
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

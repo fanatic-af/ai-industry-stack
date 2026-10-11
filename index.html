@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Industry Stack</title>
+  <meta name="description" content="An interactive map of the AI industry: 11 layers from power plants to applications, with the companies in each bucket.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧱</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <div class="grid"></div>
+  </div>
+
+  <header class="topbar">
+    <a href="#/" class="brand" aria-label="Home">
+      <span class="brand-mark">🧱</span>
+      <span class="brand-text">AI Industry <b>Stack</b></span>
+    </a>
+    <nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="actions">
+      <button class="btn search-btn" id="searchBtn" title="Search companies (press /)">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.4-1.41 1.4-5.4-5.39A8 8 0 1 1 10 2Zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z"/></svg>
+        <span>Search</span><kbd>/</kbd>
+      </button>
+      <button class="btn" id="suggestBtn" title="Suggest a company, bucket or layer">＋ <span>Suggest</span></button>
+      <button class="btn" id="addedBtn" title="Show or hide examples that were added beyond your original document" aria-pressed="true">✦ <span>Extra examples</span></button>
+      <button class="btn" id="rulesBtn" title="Classification rules and filter tags">📐 <span>Rules</span></button>
+      <button class="btn icon" id="themeBtn" title="Toggle light / dark">◐</button>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-inner">
+      <button class="btn icon close" id="drawerClose" aria-label="Close">✕</button>
+      <div id="drawerBody"></div>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="search" id="search" aria-hidden="true">
+    <div class="search-box">
+      <input id="searchInput" type="text" placeholder="Search a company, product or bucket…" autocomplete="off" spellcheck="false">
+      <div class="search-results" id="searchResults"></div>
+      <div class="search-hint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="data.js"></script>
+  <script src="community-data.js"></script>
+  <script src="suggest.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

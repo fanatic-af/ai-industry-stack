@@ -1,0 +1,57 @@
+name: Suggest a company
+description: Add a company or product to a bucket on the map.
+title: "Add <name> to <bucket>"
+labels: ["suggestion", "company"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping grow the map. The curator reviews every suggestion; it appears on the site once approved.
+        The easiest way to fill this in is the **Suggest** button on the website, which picks the layer and bucket for you.
+  - type: input
+    id: name
+    attributes:
+      label: Company or product name
+      placeholder: e.g. Acme AI
+    validations:
+      required: true
+  - type: input
+    id: layer
+    attributes:
+      label: Layer
+      description: The layer id, L0 to L10.
+      placeholder: e.g. L4
+    validations:
+      required: true
+  - type: input
+    id: bucket
+    attributes:
+      label: Bucket
+      description: The bucket code shown on the site, e.g. 4.2.3 or A3.2.
+      placeholder: e.g. 7.2
+    validations:
+      required: true
+  - type: input
+    id: linkedin
+    attributes:
+      label: LinkedIn page
+      placeholder: https://www.linkedin.com/company/...
+  - type: input
+    id: website
+    attributes:
+      label: Website
+      placeholder: https://...
+  - type: input
+    id: industries
+    attributes:
+      label: Industries
+      description: Only for L10 applications. Comma separated, from Horizontal, Legal, Healthcare, Finance, Insurance, Education, Retail, Manufacturing, Media, Government, Science.
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it belongs here
+  - type: input
+    id: by
+    attributes:
+      label: Credit me as
+      description: Optional. Shown on the site as "suggested by".
